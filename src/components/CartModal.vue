@@ -1,7 +1,7 @@
 <template>
     <input type="checkbox" id="cart-modal" class="modal-toggle" />
     <div class="modal max-md:modal-bottom">
-        <div v-if="!cartStore.empty" class="modal-box w-full md:max-w-3xl">
+        <div v-if="!cartStore.empty" class="modal-box w-full md:max-w-3xl lg:max-w-4xl">
             <!-- HEADER -->
             <div class="flex items-center justify-between border-b border-slate-300 pb-4 px-1 md:px-2">
                 <h3 class="font-semibold text-slate-600 md:text-lg uppercase ">

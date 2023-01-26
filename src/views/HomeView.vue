@@ -1,5 +1,5 @@
 <template>
-  <div v-if="!loading" id="container" class="flex flex-col mt-3">
+  <div v-if="!loading && !error" id="container" class="flex flex-col mt-3">
     <!-- HEADER -->
     <div class="flex flex-col md:flex-row justify-between mb-6 ml-2">
       <h1 class="text-3xl font-semibold mb-1">Tienda de Productos</h1>
@@ -28,6 +28,18 @@
   <div id="loading-container" v-if="loading" class="flex justify-center items-center min-h-[80vh]">
     <div id="loading"></div>
   </div>
+  <!-- API ERROR -->
+  <div v-if="error" class="mt-10">
+    <div class="flex flex-col md:flex-row items-center space-x-1 bg-red-200 rounded-md py-4 px-5 md:py-10 md:px-12">
+      <ExclamationTriangleIcon class="h-8 w-8 text-red-500" />
+      <div class="flex items-center">
+        <h3 class="md:text-xl text-red-500">
+          <span class="text-red-500 font-semibold">Ocurrió un error!!</span>
+          Por favor revise su conexión a internet.
+        </h3>
+      </div>
+    </div>
+  </div>
 
 </template>
 
@@ -42,10 +54,11 @@ import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
 const productStore = useProductStore()
 const loading = ref(false)
+const error = ref(false)
 
 onMounted(async () => {
   loading.value = true
-  await api_request(productStore.products)
+  await api_request(productStore.products, error)
   loading.value = false
 })
 </script>

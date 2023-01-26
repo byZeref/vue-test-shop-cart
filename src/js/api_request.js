@@ -1,6 +1,6 @@
 import api_config from "../api/api_config"
 
-const api_request = async (products_store) => {
+const api_request = async (products_store, error) => {
     try {
         const res = await api_config.get()
         const { data } = res
@@ -14,8 +14,7 @@ const api_request = async (products_store) => {
             products_store.push(prod)
         });
     } catch (e) {
-        console.log('Error');
-        console.log(e);
+        error.value = true
     }
 
 }
