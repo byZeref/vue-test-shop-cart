@@ -22,8 +22,8 @@
                 </ul>
             </div>
             <img src="../assets/icons/main-ico-2.ico" class="max-lg:hidden w-10 h-10" alt="main-ico-2">
-            <RouterLink to="/" class="max-lg:hidden text-2xl font-medium">
-                Tienda
+            <RouterLink to="/" class="max-lg:hidden text-2xl font-medium text-[#41A6F9]">
+                Fashion
             </RouterLink>
         </div>
         <img src="../assets/icons/main-ico-2.ico" class="lg:hidden w-10 h-10" alt="main-ico-2">

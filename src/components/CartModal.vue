@@ -17,9 +17,12 @@
                     class="flex items-center border-b border-slate-300">
                     <!-- PRODUCTS -->
                     <div class="basis-1/3 md:basis-1/4 px-1 md:px-2 py-4">
-                        <p class="text-slate-700 text-base md:text-lg font-bold">
-                            {{ item.product }}
-                        </p>
+                        <div class="tooltip w-[150px] md:w-[220px]" :data-tip="item.product">
+                            <p
+                                class="text-slate-700 text-left text-base md:text-lg font-bold truncate hover:cursor-pointer">
+                                {{ item.product }}
+                            </p>
+                        </div>
                         <p class="text-slate-500 max-md:text-sm">
                             Cantidad: {{ item.cant }}
                         </p>
@@ -32,8 +35,10 @@
                         <button @click="removeFromCart(item)" class="btn btn-error btn-xs md:btn-sm btn-square mx-1">
                             <MinusIcon class="w-3 h-3 md:w-5 md:h-5" />
                         </button>
-                        <button @click="removeFullProd(item)" class="btn btn-ghost btn-sm text-xs">
-                            <span class="md:hidden">Eliminar</span>
+                        <button @click="removeFullProd(item)" class="btn btn-ghost btn-sm text-xs max-sm:px-1">
+                            <span class="md:hidden text-error">
+                                <TrashIcon class="w-6 h-6" />
+                            </span>
                             <span class="max-md:hidden">Eliminar Producto</span>
                         </button>
                     </div>
@@ -60,15 +65,15 @@
         </div>
         <!-- EMPTY CART -->
         <div v-else class="modal-box w-full md:max-w-3xl">
-            <div :class="`text-${modalInfoCss}`">
-                <p class="flex items-center font-semibold text-sm md:text-lg">
-                    <InformationCircleIcon v-if="buyMsgeCode !== 1" class="w-7 h-7 mr-1" />
-                    <CheckCircleIcon v-if="buyMsgeCode === 1" class="w-7 h-7 mr-1" />
-                    <span>{{ cartStore.cleaningMsge }}</span>
-                </p>
-            </div>
+            <p :class="modalInfoCss" class="flex items-center font-semibold text-sm md:text-lg">
+                <InformationCircleIcon v-if="buyMsgeCode !== 1" class="w-7 h-7 mr-1" />
+                <CheckCircleIcon v-if="buyMsgeCode === 1" class="w-7 h-7 mr-1" />
+                <span>{{ cartStore.cleaningMsge }}</span>
+            </p>
             <div class="modal-action">
-                <label for="cart-modal" :class="`btn btn-${modalInfoCss}`">Aceptar</label>
+                <label for="cart-modal" :class="[modalInfoCss === 'text-accent' ? 'btn-accent' : '', 'btn']">
+                    Aceptar
+                </label>
             </div>
         </div>
     </div>
@@ -78,7 +83,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { PlusIcon, MinusIcon, CheckCircleIcon, InformationCircleIcon } from '@heroicons/vue/24/outline'
+import { PlusIcon, MinusIcon, CheckCircleIcon, InformationCircleIcon, TrashIcon } from '@heroicons/vue/24/outline'
 import { useProductStore } from '../stores/product'
 import { useCartStore } from '../stores/cart'
 
@@ -88,9 +93,9 @@ const loadingBuy = ref(false)
 const modalInfoCss = ref('')
 const buyMsgeCode = computed(() => {
     if (cartStore.cleaningCode === 1) {
-        modalInfoCss.value = 'accent'
+        modalInfoCss.value = 'text-accent'
     } else {
-        modalInfoCss.value = 'slate-600'
+        modalInfoCss.value = 'text-slate-600'
     }
     return cartStore.cleaningCode
 })

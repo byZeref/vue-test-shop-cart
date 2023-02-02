@@ -2,9 +2,11 @@
   <div v-if="!loading && !error" id="container" class="flex flex-col mt-3">
     <!-- HEADER -->
     <div class="flex flex-col md:flex-row justify-between mb-6 ml-2">
-      <h1 class="text-3xl font-semibold mb-1">Tienda de Productos</h1>
+      <h1 class="text-3xl text-slate-600 font-semibold mb-1">Productos</h1>
       <div class="flex flex-col md:flex-row md:space-x-2">
         <SearchFilter />
+        <DropdownSort />
+        <DropdownCategories :categories="categories" />
       </div>
     </div>
     <!-- PRODUCTS CARDS -->
@@ -46,21 +48,26 @@
 <script setup>
 import '../assets/css/loading.css'
 import api_request from "../js/api_request";
-import Shop from "../components/Shop.vue";
 import { ref, onMounted } from "vue";
 import { useProductStore } from "../stores/product";
+import Shop from "../components/Shop.vue";
 import SearchFilter from "../components/SearchFilter.vue";
+import DropdownSort from '../components/DropdownSort.vue';
+import DropdownCategories from '../components/DropdownCategories.vue';
 import { ExclamationTriangleIcon } from '@heroicons/vue/24/outline'
 
 const productStore = useProductStore()
 const loading = ref(false)
 const error = ref(false)
+const categories = ref([])
 
 onMounted(async () => {
   loading.value = true
-  await api_request(productStore.products, error)
+  await api_request(productStore.products, error, categories)
   loading.value = false
 })
+
+
 </script>
 
 <style scoped>
