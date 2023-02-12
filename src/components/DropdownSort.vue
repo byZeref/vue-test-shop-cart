@@ -23,10 +23,14 @@
                                 active ? 'bg-emerald-100 text-emerald-800' : 'text-gray-900',
                                 'relative cursor-pointer select-none py-2 pl-10 pr-4',
                             ]">
-                                <span :class="[
-                                    selected ? 'font-medium' : 'font-normal',
-                                    'block truncate',
-                                ]">{{ opt }}</span>
+                                <span :class="[selected ? 'font-medium' : 'font-normal', 'block truncate',]">
+                                    {{ opt }}
+                                    <!-- <span v-if="opt === 'Precio'"
+                                        class="absolute inset-y-0 right-0 items-center flex pr-5">
+                                        $...
+                                        <span class="text-xs">$</span>
+                                    </span> -->
+                                </span>
                                 <span v-if="selected"
                                     class="absolute inset-y-0 left-0 flex items-center pl-3 text-emerald-600">
                                     <CheckIcon class="h-5 w-5" aria-hidden="true" />
@@ -50,6 +54,7 @@ const productStore = useProductStore()
 const options = ref([
     'Nombre',
     'Precio',
+    'Rating',
 ])
 const selected = ref(options.value[0])
 

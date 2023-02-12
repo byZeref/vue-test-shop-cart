@@ -1,8 +1,11 @@
 <template>
-  <div v-if="!loading && !error" id="container" class="flex flex-col mt-3">
+  <div v-if="!loading && !error" id="container" class="flex flex-col mt-3 mb-2 md:mb-20">
     <!-- HEADER -->
     <div class="flex flex-col md:flex-row justify-between mb-6 ml-2">
-      <h1 class="text-3xl text-slate-600 font-semibold mb-1">Productos</h1>
+      <div class="flex items-center">
+        <h1 class="text-3xl text-slate-600 font-semibold mb-1">Productos</h1>
+        <!-- <button @click="$router.push('/products')" class="btn-success btn btn-sm ml-2">Nuevo</button> -->
+      </div>
       <div class="flex flex-col md:flex-row md:space-x-2">
         <SearchFilter />
         <DropdownSort />
@@ -24,6 +27,11 @@
           </h3>
         </div>
       </div>
+    </div>
+
+    <!-- LOADING SCROLL -->
+    <div id="loading-scroll" v-if="scrollData" class="flex justify-center mt-8">
+      <div id="loading"></div>
     </div>
   </div>
   <!-- LOADING ANIMATION -->
@@ -48,7 +56,7 @@
 <script setup>
 import '../assets/css/loading.css'
 import api_request from "../js/api_request";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted, onBeforeMount } from "vue";
 import { useProductStore } from "../stores/product";
 import Shop from "../components/Shop.vue";
 import SearchFilter from "../components/SearchFilter.vue";
@@ -60,13 +68,36 @@ const productStore = useProductStore()
 const loading = ref(false)
 const error = ref(false)
 const categories = ref([])
+const scrollData = ref(false)
 
 onMounted(async () => {
-  loading.value = true
+  // window.addEventListener('scroll', scrolling)
   await api_request(productStore.products, error, categories)
-  loading.value = false
+  productStore.filter_products = productStore.products
 })
 
+
+// INFINITE LOADING NO FUNCIONA BIEN
+
+// onBeforeMount(() => {
+//   loadData()
+// })
+// onUnmounted(() => {
+//   window.removeEventListener('scroll', scrolling)
+// })
+// const scrolling = () => {
+//   scrollData.value = document.documentElement.scrollTop + window.innerHeight === document.documentElement.offsetHeight
+//   if (scrollData.value) {
+//     loadData()
+//   }
+// }
+// const loadData = async () => {
+//   productStore.products.length === 0 && (loading.value = true)
+//   await api_request(productStore.products, error, categories)
+//   productStore.filter_products = productStore.products
+//   scrollData.value = false
+//   loading.value === true && (loading.value = false)
+// }
 
 </script>
 

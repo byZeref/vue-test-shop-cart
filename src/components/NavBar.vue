@@ -29,7 +29,11 @@
         <img src="../assets/icons/main-ico-2.ico" class="lg:hidden w-10 h-10" alt="main-ico-2">
         <div class="navbar-center hidden lg:flex">
             <ul class="menu menu-horizontal px-1">
-                <li><a>Item 1</a></li>
+                <li>
+                    <RouterLink to="/products" class="max-lg:hidden">
+                        Productos
+                    </RouterLink>
+                </li>
                 <li tabindex="0">
                     <a>
                         Parent

@@ -6,7 +6,7 @@
             <div class="mb-2">
                 <div class="tooltip w-full" :data-tip="item.name">
                     <h3 class="text-start text-lg font-semibold uppercase text-sky-500 truncate">
-                        <label @click="showDescript(item)" class="hover:cursor-pointer" for="description-modal">
+                        <label @click="prodDescript = item" class="hover:cursor-pointer" for="description-modal">
                             {{ item.name }}
                         </label>
                     </h3>
@@ -26,7 +26,12 @@
     <input type="checkbox" id="description-modal" class="modal-toggle" />
     <div class="modal max-md:modal-bottom">
         <div class="modal-box w-full md:max-w-2xl lg:max-w-3xl">
-            <h3 class="text-slate-700 text-lg md:text-2xl mb-2">{{ prodDescript.name }}</h3>
+            <h3 class="text-slate-700 text-lg md:text-2xl md:mb-1">{{ prodDescript.name }}</h3>
+            <div class="flex items-center mb-1 pb-1 md:mb-3 md:pb-3 border-b-2 border-dashed">
+                <StarIcon v-for="count in 5" :key="count"
+                    :class="[count <= prodDescript.rating ? 'text-info' : '', 'h-4 w-4 md:h-6 md:w-6']" />
+                <p class="md:text-lg ml-1 text-slate-400">({{ prodDescript.ratingCount }} valoraciones)</p>
+            </div>
             <p class="text-slate-500 md:text-lg">{{ prodDescript.desc }}</p>
             <div class="modal-action">
                 <label for="description-modal" class="btn btn-sm text-xs md:btn-md">Aceptar</label>
@@ -40,6 +45,7 @@
 import { ref, onMounted } from 'vue'
 import { useProductStore } from '../stores/product';
 import { useCartStore } from '../stores/cart';
+import { StarIcon } from '@heroicons/vue/20/solid'
 
 const productStore = useProductStore()
 const cartStore = useCartStore()

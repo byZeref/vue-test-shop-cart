@@ -12,15 +12,19 @@ const api_request = async (products_store, error, categories) => {
                 price: item.price,
                 image: item.image,
                 category: fixCateg(item.category),
-                desc: item.description
+                desc: item.description,
+                rating: Math.round(item.rating.rate),
+                ratingCount: item.rating.count
             }
             products_store.push(prod)
         });
 
-        const res2 = await api_config_categ.get()
-        res2.data.forEach(item => {
-            categories.value.push(fixCateg(item))
-        });
+        if (categories.value.length === 0) {
+            const res2 = await api_config_categ.get()
+            res2.data.forEach(item => {
+                categories.value.push(fixCateg(item))
+            });
+        }
 
     } catch (e) {
         error.value = true

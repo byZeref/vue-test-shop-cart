@@ -5,7 +5,7 @@
                 <ListboxButton id="menu-button"
                     class="relative w-full cursor-pointer rounded-lg py-2 pl-3 pr-10 text-left shadow-md focus:outline-none focus-visible:border-red-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-emerald-300 text-sm">
                     <span class="flex truncate text-slate-500 hover:opacity-80 duration-200">
-                        Categories
+                        Categorías
                         <!-- <p class="font-semibold ml-1">{{ selected }}</p> -->
                     </span>
                     <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
